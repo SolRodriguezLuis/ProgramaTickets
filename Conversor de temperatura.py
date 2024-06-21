@@ -2,7 +2,6 @@
 
 from tkinter import messagebox, Label, Tk, StringVar, CENTER, ttk, Entry, Button 
 
-dato_salida=()
 input_dato=()
 output_dato=()
 
@@ -15,9 +14,10 @@ def convertir():
         if entrada==salida:
             output_dato=grados
         elif entrada=='Celsius' and salida=='Fahrenheit':
-                output_dato=round((grados-32)*5/9,2)
+            output_dato=round((grados*9/5)+32,2)
         else:
-            output_dato=round((grados*9/5)+ 32 , 2)
+            output_dato=round((grados-32)*5/9,2)  
+        
         dato_salida.configure(text=output_dato)
         
     except:
@@ -25,11 +25,11 @@ def convertir():
 
 def borrar():
     global input_dato
-    global dato_salida
+    global output_dato
     input_dato.set("")
-    dato_salida.set("")
+    output_dato.set("")
     input_dato=""
-    dato_salida=""
+    output_dato=""
     
 ventana= Tk()
 
@@ -65,14 +65,15 @@ rotulo.grid(row=3, column=2, columnspan=1, ipadx=13, ipady=1)
 rotulo.configure(background='aquamarine4')
 
 temp_entrada= StringVar()
-desp_entrada= ttk.Combobox(ventana, values=['Celsius', 'Fahrenheith'], state='readonly', textvariable=temp_entrada, font='consolas 10 bold', width=10)
+desp_entrada= ttk.Combobox(ventana, values=['Celsius', 'Fahrenheit'], state='readonly', textvariable=temp_entrada, font='consolas 10 bold', width=10)
 desp_entrada.place_configure(x=50,y=100)
-desp_entrada.set('Celsius')
+temp_entrada.set('Celsius')
+
 
 temp_salida= StringVar()
-desp_salida= ttk.Combobox(ventana, values=['Celsius', 'Fahrenheith'], state='readonly', textvariable=temp_salida, font='consolas 10 bold', width=10)
+desp_salida= ttk.Combobox(ventana, values=['Celsius', 'Fahrenheit'], state='readonly', textvariable=temp_salida, font='consolas 10 bold', width=10)
 desp_salida.place_configure(x=190,y=100)
-
+temp_salida.set('Fahrenheit')
 
 
 boton_calcular=Button(ventana, text='Calcular', bg='mint cream', fg='black', width=10, height=2, command=convertir)
@@ -83,10 +84,6 @@ boton_borrar=Button(ventana, text='Borrar', bg='salmon1', fg='black', width=10, 
 boton_borrar.grid(row=10, column=2)
 boton_borrar.place_configure(x=55,y=180) 
 
-
-
-
 ventana.mainloop()
-
 
 
